@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <!-- 홈 -->
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.kkjang.stockapp.Bottom.home.HomeFragment"
+        android:label="@string/main_bottom_home"
+        tools:layout="@layout/fragment_home" />
+
+    <!-- 즐겨찾기 -->
+    <fragment
+        android:id="@+id/navigation_favorites"
+        android:name="com.kkjang.stockapp.Bottom.favorites.FavoritesFragment"
+        android:label="@string/main_bottom_fav"
+        tools:layout="@layout/fragment_favorites" />
+
+
+    <!-- 수익인증 -->
+    <fragment
+        android:id="@+id/navigation_revenue"
+        android:name="com.kkjang.stockapp.Bottom.revenue.RevenueFragment"
+        android:label="@string/main_bottom_reven"
+        tools:layout="@layout/fragment_revenue" />
+
+
+    <!-- 1:1문의 -->
+    <fragment
+        android:id="@+id/navigation_question"
+        android:name="com.kkjang.stockapp.Bottom.question.QuestionFragment"
+        android:label="@string/main_bottom_que"
+        tools:layout="@layout/fragment_question" />
+
+    <!-- 더보기 -->
+    <fragment
+        android:id="@+id/navigation_more"
+        android:name="com.kkjang.stockapp.Bottom.more.MoreFragment"
+        android:label="@string/main_bottom_more"
+        tools:layout="@layout/fragment_more" />
+
+</navigation>

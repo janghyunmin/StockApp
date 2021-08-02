@@ -5,6 +5,35 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <!-- Top View-->
+    <fragment
+        android:id="@+id/navigation_jump"
+        android:name="com.kkjang.stockapp.Bottom.home.HomeFragment"
+        android:label="@string/main_top_jump"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_today"
+        android:name="com.kkjang.stockapp.Top.today.TodayFragment"
+        android:label="@string/main_top_today"
+        tools:layout="@layout/fragment_today" />
+
+    <fragment
+        android:id="@+id/navigation_analysis"
+        android:name="com.kkjang.stockapp.Top.analysis.AnalysisFragment"
+        android:label="@string/main_top_analysis"
+        tools:layout="@layout/fragment_analysis" />
+    <fragment
+        android:id="@+id/navigation_recommend"
+        android:name="com.kkjang.stockapp.Top.recommend.RecommendFragment"
+        android:label="@string/main_top_recommend"
+        tools:layout="@layout/fragment_recommend" />
+
+
+
+
+
+    <!-- Bottom View -->
     <!-- 홈 -->
     <fragment
         android:id="@+id/navigation_home"

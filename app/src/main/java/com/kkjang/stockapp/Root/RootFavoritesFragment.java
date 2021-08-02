@@ -1,5 +1,6 @@
-package com.kkjang.stockapp.Top.jump;
+package com.kkjang.stockapp.Root;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,14 @@ import androidx.fragment.app.Fragment;
 
 import com.kkjang.stockapp.R;
 
-public class JumpFragment extends Fragment {
+public class RootFavoritesFragment extends Fragment {
+    Context context;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.root_favorites, container, false);
+
+        return root;
     }
 }

@@ -1,4 +1,4 @@
-package com.kkjang.stockapp.Top.today;
+package com.kkjang.stockapp.Top.recommend;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,20 +13,19 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.kkjang.stockapp.R;
-import com.kkjang.stockapp.Top.recommend.RecommendViewModel;
+import com.kkjang.stockapp.Top.analysis.AnalysisViewModel;
 
-public class TodayFragment extends Fragment {
+public class RecommendFragment extends Fragment {
 
-    private TodayViewModel todayViewModel;
-
+    private RecommendViewModel recommendViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        todayViewModel =
-                new ViewModelProvider(this).get(TodayViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_today, container, false);
-        final TextView textView = root.findViewById(R.id.text_today);
-        todayViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        recommendViewModel =
+                new ViewModelProvider(this).get(RecommendViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_recommend, container, false);
+        final TextView textView = root.findViewById(R.id.text_recommend);
+        recommendViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

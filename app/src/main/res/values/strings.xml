@@ -7,6 +7,12 @@
     <string name="main_top_analysis">종목분석</string>
     <string name="main_top_recommend">무료종목추천</string>
 
+    <string name="main_jump_left">급등관련주</string>
+    <string name="main_jump_right">관련주 즐겨찾기</string>
+
+    <string name="main_jump_root_left">급등관련주</string>
+    <string name="main_jump_root_right">최근 본 관련주</string>
+
 
     <!-- bottom navigation text -->
     <string name="main_bottom_home">홈</string>

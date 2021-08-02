@@ -28,7 +28,15 @@ public class Division {
     public static final String PERMISSION_CHECK_NO = "no";
 
     /**** Retrofit 분기 변수 처리***/
-   
+
+
+    /** jhm 2021-07-29 오후 3:49
+     * 급등관련주 ViewType
+     ***/
+
+    public static final int VIEW_ITEM_0 = 0;
+    public static final int VIEW_ITEM_1 = 1;
+
 
 
 

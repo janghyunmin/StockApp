@@ -2,28 +2,25 @@ package com.kkjang.stockapp.Activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.kkjang.stockapp.pageAdapter.TopViewModel;
 import com.kkjang.stockapp.R;
 
 import com.kkjang.stockapp.databinding.ActivityMainBinding;
+import com.kkjang.stockapp.mainAdapter.CommonViewPagerAdapter;
+import com.kkjang.stockapp.util.Division;
+import com.kkjang.stockapp.util.LogUtil;
 import com.kkjang.stockapp.util.StatusBarCustom;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.viewpager.widget.ViewPager;
 
 import okhttp3.OkHttpClient;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     /**
      * jhm
      * @class MainActivity
@@ -36,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     /** 공통 **/
     Context context;
     public ActivityMainBinding mainBinding;
-    public TopViewModel topViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,43 +42,106 @@ public class MainActivity extends AppCompatActivity {
         mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
         /** jhm 2021-07-07 오후 3:48  navigationView 초기화 **/
+        Debuging();
         initView();
 
     }
-
-
-    public void initView(){
-        BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home,
-                R.id.navigation_favorites,
-                R.id.navigation_revenue,
-                R.id.navigation_question,
-                R.id.navigation_more
-        )
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.bottom_nav_host_fragment);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.navigateUp(navController,appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
-
-
+    public void Debuging(){
         // OkHttp 3.x 버전
         new OkHttpClient.Builder()
                 .addNetworkInterceptor(new StethoInterceptor())
                 .build();
-
         Stetho.initializeWithDefaults(this);
+    }
 
-        // Status bar custom
+
+    public void initView(){
+        /** jhm 2021-07-27 오후 2:24
+         * StatusBar Custom
+         ***/
         StatusBarCustom.setStatusBarColor(this,StatusBarCustom.StatusBarColorType.BLACK_STATUS_BAR);
+//
+//        viewModel = new ViewModel(getSupportFragmentManager(),
+//                new TabLayout.ViewPagerOnTabSelectedListener((ViewPager)findViewById(R.id.content_viewPager)),
+//                new TabLayout.TabLayoutOnPageChangeListener((TabLayout)findViewById(R.id.bottom_tabLayout))
+//        );
+//
+//        mainBinding.setLifecycleOwner(this);
+//        mainBinding.setViewModel(viewModel);
 
-        topViewModel = new TopViewModel(getSupportFragmentManager(),
-                new TabLayout.ViewPagerOnTabSelectedListener((ViewPager)findViewById(R.id.content_viewPager)),
-                new TabLayout.TabLayoutOnPageChangeListener((TabLayout)findViewById(R.id.top_tabLayout)));
-        mainBinding.setTopViewModel(topViewModel);
+        mainBinding.textHome.setOnClickListener(this);
+        mainBinding.textToday.setOnClickListener(this);
+        mainBinding.textAnalysis.setOnClickListener(this);
+        mainBinding.textRecommend.setOnClickListener(this);
+
+
+
+
+        mainBinding.contentViewPager.setAdapter(new CommonViewPagerAdapter(getSupportFragmentManager(), Division.VIEW_ITEM_0));
+        mainBinding.contentViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mainBinding.bottomTabLayout));
+        mainBinding.bottomTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mainBinding.textHome.setSelected(false);
+                mainBinding.textToday.setSelected(false);
+                mainBinding.textAnalysis.setSelected(false);
+                mainBinding.textRecommend.setSelected(false);
+
+                mainBinding.contentViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.text_home:
+                LogUtil.logE("급등관련주");
+                mainBinding.textHome.setSelected(!mainBinding.textHome.isSelected());
+                mainBinding.textToday.setSelected(false);
+                mainBinding.textAnalysis.setSelected(false);
+                mainBinding.textRecommend.setSelected(false);
+                break;
+
+            case R.id.text_today:
+                LogUtil.logE("오늘시황");
+                mainBinding.textHome.setSelected(false);
+                mainBinding.textToday.setSelected(!mainBinding.textToday.isSelected());
+                mainBinding.textAnalysis.setSelected(false);
+                mainBinding.textRecommend.setSelected(false);
+                break;
+
+            case R.id.text_analysis:
+                LogUtil.logE("종목분석");
+                mainBinding.textHome.setSelected(false);
+                mainBinding.textToday.setSelected(false);
+                mainBinding.textAnalysis.setSelected(!mainBinding.textAnalysis.isSelected());
+                mainBinding.textRecommend.setSelected(false);
+                break;
+
+            case R.id.text_recommend:
+                LogUtil.logE("무료종목추천");
+                mainBinding.textHome.setSelected(false);
+                mainBinding.textToday.setSelected(false);
+                mainBinding.textAnalysis.setSelected(false);
+                mainBinding.textRecommend.setSelected(!mainBinding.textRecommend.isSelected());
+                break;
+        }
     }
 
 }

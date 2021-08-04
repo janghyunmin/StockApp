@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.kkjang.stockapp.R;
 
 import com.kkjang.stockapp.databinding.ActivityMainBinding;
-import com.kkjang.stockapp.mainAdapter.CommonViewPagerAdapter;
+import com.kkjang.stockapp.Adapter.CommonViewPagerAdapter;
 import com.kkjang.stockapp.util.Division;
 import com.kkjang.stockapp.util.LogUtil;
 import com.kkjang.stockapp.util.StatusBarCustom;
@@ -55,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     public void initView(){
         /** jhm 2021-07-27 오후 2:24
          * StatusBar Custom
@@ -68,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //        mainBinding.setLifecycleOwner(this);
 //        mainBinding.setViewModel(viewModel);
+
+        mainBinding.textHome.setSelected(true);
 
         mainBinding.textHome.setOnClickListener(this);
         mainBinding.textToday.setOnClickListener(this);
@@ -112,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.text_home:
                 LogUtil.logE("급등관련주");
-                mainBinding.textHome.setSelected(!mainBinding.textHome.isSelected());
+                mainBinding.textHome.setSelected(true);
                 mainBinding.textToday.setSelected(false);
                 mainBinding.textAnalysis.setSelected(false);
                 mainBinding.textRecommend.setSelected(false);
@@ -121,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.text_today:
                 LogUtil.logE("오늘시황");
                 mainBinding.textHome.setSelected(false);
-                mainBinding.textToday.setSelected(!mainBinding.textToday.isSelected());
+                mainBinding.textToday.setSelected(true);
                 mainBinding.textAnalysis.setSelected(false);
                 mainBinding.textRecommend.setSelected(false);
                 break;
@@ -130,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 LogUtil.logE("종목분석");
                 mainBinding.textHome.setSelected(false);
                 mainBinding.textToday.setSelected(false);
-                mainBinding.textAnalysis.setSelected(!mainBinding.textAnalysis.isSelected());
+                mainBinding.textAnalysis.setSelected(true);
                 mainBinding.textRecommend.setSelected(false);
                 break;
 
@@ -139,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mainBinding.textHome.setSelected(false);
                 mainBinding.textToday.setSelected(false);
                 mainBinding.textAnalysis.setSelected(false);
-                mainBinding.textRecommend.setSelected(!mainBinding.textRecommend.isSelected());
+                mainBinding.textRecommend.setSelected(true);
                 break;
         }
     }

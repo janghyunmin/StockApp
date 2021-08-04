@@ -1,4 +1,4 @@
-package com.kkjang.stockapp.mainAdapter;
+package com.kkjang.stockapp.Adapter;
 
 
 import androidx.fragment.app.Fragment;

@@ -1,4 +1,4 @@
-package com.kkjang.stockapp.mainAdapter;
+package com.kkjang.stockapp.Adapter;
 
 import android.view.ViewGroup;
 
@@ -11,7 +11,6 @@ import com.kkjang.stockapp.Bottom.home.HomeFragment;
 import com.kkjang.stockapp.Bottom.more.MoreFragment;
 import com.kkjang.stockapp.Bottom.question.QuestionFragment;
 import com.kkjang.stockapp.Bottom.revenue.RevenueFragment;
-import com.kkjang.stockapp.Root.RootFavoritesFragment;
 
 import java.util.ArrayList;
 import java.util.List;

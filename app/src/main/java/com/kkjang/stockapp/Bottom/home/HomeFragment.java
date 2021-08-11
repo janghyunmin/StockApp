@@ -41,8 +41,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     boolean chk = false;
     Context context;
-    int pageNumber = 0;
-    boolean lastPageState = false;
+
+
+
     /** jhm 2021-08-03 오후 5:47 * arraylist  ***/
     ArrayList<SpotUpDAO.SpotUpDAOList> spotUpDAOListArrayList = new ArrayList<SpotUpDAO.SpotUpDAOList>();
 
@@ -55,20 +56,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         binding.slideLayoutVisible.setOnClickListener(this);
         binding.slideLayoutGone.setOnClickListener(this);
+        spotUpDAOListArrayList.clear();
 
 
 
-
-        Handler handler = new Handler(){
-            public void handleMessage(Message msg){
-                super.handleMessage(msg);
-                binding.ShimmerViewContainer.stopShimmerAnimation();
-                binding.ShimmerViewContainer.setVisibility(View.GONE);
-                initView();
-            }
-        };
-        handler.sendEmptyMessageDelayed(0,3000);
-
+        animLogic();
+        tabChangeLogic();
+        initFirst();
+        initPotList();
 
 
 
@@ -86,6 +81,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onResume() {
         super.onResume();
         binding.ShimmerViewContainer.startShimmerAnimation();
+        animLogic();
+        initFirst();
 
     }
 
@@ -96,58 +93,111 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         binding.ShimmerViewContainer.stopShimmerAnimation();
     }
 
-    public void initView(){
+    @Override
+    public void onStart() {
+        super.onStart();
+        LogUtil.logE("HomeFragment " + "onStart");
+        binding.ShimmerViewContainer.startShimmerAnimation();
+        animLogic();
+        initFirst();
+
+
+    }
+
+    void animLogic(){
+        Handler handler = new Handler(){
+            public void handleMessage(Message msg){
+                super.handleMessage(msg);
+                binding.ShimmerViewContainer.stopShimmerAnimation();
+                binding.ShimmerViewContainer.setVisibility(View.GONE);
+            }
+        };
+        handler.sendEmptyMessageDelayed(0,3000);
+
+    }
+
+    public void initFirst(){
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel.getSpotData(Util_osj.getAndroidId(getActivity())).observe(getActivity(), spotResponse -> {
+            List<SpotUpDAO.SpotUpDAOList> spotUpDaos = spotResponse.getList();
+            LogUtil.logE("spotDaos size : " + spotResponse.getList().size());
+            for(int i = 0; i < 6; i++){
+                spotUpDAOListArrayList.add(spotResponse.getList().get(i));
+            }
+            LogUtil.logE("spotUpDAOListArrayList size : " + spotUpDAOListArrayList.size());
+        });
+
+        spotUpAdapter = new SpotUpAdapter(spotUpDAOListArrayList,context);
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(context,3));
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerView.setNestedScrollingEnabled(true);
+
+        binding.recyclerView.setAdapter(spotUpAdapter);
+        spotUpAdapter.notifyDataSetChanged();
+
+    }
+
+
+
+    public void initPotList(){
 
         /** jhm 2021-08-03 오후 2:44
          * recycler view loading
          ***/
-        SinaRefreshView refreshView = new SinaRefreshView(context);
-        refreshView.setArrowResource(R.drawable.anim_loading_view);
-        refreshView.setPullDownStr("땡겨지는중 ㅠㅠ..");
-        refreshView.setTextColor(0xff745D5C);
-        binding.refresh.setHeaderView(refreshView);
+//        SinaRefreshView refreshView = new SinaRefreshView(context);
+//        refreshView.setArrowResource(R.drawable.anim_loading_view);
+//        refreshView.setPullDownStr("땡겨지는중 ㅠㅠ..");
+//        refreshView.setTextColor(0xff745D5C);
+//        binding.refresh.setHeaderView(refreshView);
+//
+//        spotUpAdapter.notifyDataSetChanged();
+//
+//        LoadingView loadingView = new LoadingView(context);
+//        binding.refresh.setBottomView(loadingView);
+//        binding.refresh.setOnRefreshListener(new RefreshListenerAdapter() {
+//            @Override
+//            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        refreshLayout.finishRefreshing();
+//                        ToastUtil.toast(context,"불러올 데이터가 없습니다.");
+//
+//                    }
+//                },2000);
+//            }
+//            @Override
+//            public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        spotUpDAOListArrayList.clear();
+//                        //spotUpAdapter.setProgressMore(false);
+//
+//                        ToastUtil.toast(context,"데이터 불러오기 성공.");
+//
+//                        int start = spotUpAdapter.getItemCount();
+//                        LogUtil.logE("start : " + start);
+//                        int end = start + 6;
+//
+//                        homeViewModel.getSpotData(Util_osj.getAndroidId(getActivity())).observe(getActivity(), spotResponse -> {
+//                            List<SpotUpDAO.SpotUpDAOList> spotUpDaos = spotResponse.getList();
+//                            for(int index = start + 1; index <= end; index++){
+//                                spotUpDAOListArrayList.add(spotUpDaos.get(index));
+//                            }
+//                            spotUpAdapter.notifyDataSetChanged();
+//                        });
+//                        spotUpAdapter.addItemMore(spotUpDAOListArrayList);
+//                        spotUpAdapter.setMoreLoading(false);
+//                        refreshLayout.finishLoadmore();
+//                    }
+//                },2000);
+//            }
+//
+//        });
 
-        LoadingView loadingView = new LoadingView(context);
-        binding.refresh.setBottomView(loadingView);
-        binding.refresh.setOnRefreshListener(new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.finishRefreshing();
-                        ToastUtil.toast(context,"Top 입니다.");
-                        pageNumber = 0;
-                        lastPageState = false;
-                        initPotList();
-                    }
-                },2000);
-            }
-            @Override
-            public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if(lastPageState){
-                            ToastUtil.toast(context,"불러올 데이터가 없습니다.");
-                            refreshLayout.finishLoadmore();
-                        }else{
-                            ToastUtil.toast(context,"바텀입니다.");
-                            refreshLayout.finishLoadmore();
-
-                            //팟 리스트 데이터 추가
-                            addPotList();
-                        }
-
-                    }
-                },2000);
-            }
-
-        });
-
-        initPotList();
-        setUpRecyclerView();
+    }
 
 
 
@@ -156,7 +206,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
 
-        /** jhm 2021-08-03 오후 2:45 
+
+
+
+    public void tabChangeLogic(){
+
+        /** jhm 2021-08-03 오후 2:45
          * 급등관련주 탭
          ***/
         binding.topLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -240,46 +295,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }
 
 
-    }
-
-
-
-    public void setUpRecyclerView(){
-        if(spotUpAdapter == null){
-            spotUpAdapter = new SpotUpAdapter(spotUpDAOListArrayList,context);
-            binding.recyclerView.setLayoutManager(new GridLayoutManager(context,3));
-            binding.recyclerView.setAdapter(spotUpAdapter);
-            binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
-            binding.recyclerView.setNestedScrollingEnabled(true);
-        }else{
-            spotUpAdapter.notifyDataSetChanged();
-        }
-    }
-
-    void initPotList(){
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.getSpotData(Util_osj.getAndroidId(getActivity())).observe(getActivity(), spotResponse -> {
-            List<SpotUpDAO.SpotUpDAOList> spotUpDaos = spotResponse.getList();
-            LogUtil.logE("size : " + spotUpDaos.size());
-            spotUpDAOListArrayList.addAll(spotUpDaos);
-            spotUpAdapter.notifyDataSetChanged();
-        });
-    }
-    void addPotList() {
-        pageNumber++;
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
-        homeViewModel.getSpotData(Util_osj.getAndroidId(getActivity())).observe(getActivity(), spotResponse -> {
-            List<SpotUpDAO.SpotUpDAOList> spotUpDaos = spotResponse.getList();
-            List<SpotUpDAO.SpotUpDAOList> tempList = new ArrayList<>();
-            for(int i = 0; i < spotUpDaos.size(); i++){
-                if(i < 6)
-                    tempList.add((SpotUpDAO.SpotUpDAOList) spotResponse.getList());
-                else break;
-            }
-            spotUpDAOListArrayList.addAll(spotUpDaos);
-            spotUpAdapter.notifyDataSetChanged();
-        });
     }
 
 

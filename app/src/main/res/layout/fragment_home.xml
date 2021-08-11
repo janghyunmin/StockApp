@@ -98,7 +98,7 @@
                         <!-- Adding 3 rows of placeholders -->
                         <include layout="@layout/main_placeitem" />
                     </com.facebook.shimmer.ShimmerFrameLayout>
-                    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                         android:id="@+id/refresh"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
                                 android:overScrollMode="never" />
-                    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

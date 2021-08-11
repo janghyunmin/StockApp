@@ -20,7 +20,7 @@ public class HomeViewModel extends AndroidViewModel {
     private MutableLiveData<SpotUpDAO> spotData = new MutableLiveData<>();
     public HomeViewModel(@NonNull Application application) {
         super(application);
-        repository = new SpotUpRepository();
+       repository = new SpotUpRepository();
     }
 
     public MutableLiveData<SpotUpDAO> getSpotData(String code_name){
@@ -28,7 +28,7 @@ public class HomeViewModel extends AndroidViewModel {
         return spotData;
     }
     private MutableLiveData<SpotUpDAO> loadSpotData(String code_name){
-        return repository.getListSpotData(code_name);
+        return  SpotUpRepository.getInstance().getListSpotData(code_name);
     }
 
 

@@ -1,11 +1,6 @@
 # Gosu App Stock
-UI 2.Ver
+고수의 급등주 리뉴얼 UI Ver2.0
 :fire: :rocket:
-
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counter&count_bg=%2379C83D&title_bg=%23555555&icon=android.svg&icon_color=%2334D513&title=On+me&edge_flat=true)](https://hits.seeyoufarm.com)
-
-
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=janghyunmin)](https://github.com/GGT/github-readme-stats)
 ***************************************************************************************************************************************
 
 <!-- [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
@@ -33,14 +28,6 @@ UI 2.Ver
 </br>
 </br>
 </br>
-
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=janghyunmin&repo=janghyunmin/GGT)](https://github.com/janghyunmin/GGT)
-
-
-</br>
-</br>
-</br>
-
 ----
 
 <h3>gosu app android git clone</h3>
@@ -55,7 +42,7 @@ UI 2.Ver
 
 <h3> Contact </h3>
 :iphone: 010 - 5052 - 2670  &nbsp </br>
-:email: gusals456@notstopthem.com  &nbsp 
+:email: gusals456@naver.com  &nbsp 
 
 
 
